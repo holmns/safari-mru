@@ -1,0 +1,23 @@
+# macOS system
+.DS_Store
+
+# Xcode build products
+DerivedData/
+build/
+
+# User-specific Xcode data
+*.xcuserstate
+*.xcuserdata/
+*.xcworkspace/xcuserdata/
+
+# Logs & temp
+*.log
+*.tmp
+*.swp
+
+# Safari extension signing artifacts
+*.pem
+*.p12
+
+# npm
+node_modules/

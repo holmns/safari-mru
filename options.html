@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>MRU Settings</title>
+  <style>
+    body {
+      font-family: system-ui;
+      padding: 20px;
+    }
+    label {
+      display: block;
+      margin-bottom: 10px;
+    }
+    input {
+      width: 80px;
+      margin-left: 10px;
+    }
+  </style>
+</head>
+<body>
+  <h2>MRU Switcher Settings</h2>
+  <label>
+    HUD Delay (milliseconds):
+    <input type="number" id="hudDelay" min="0" max="1000" step="10">
+  </label>
+  <button id="save">Save</button>
+  <span id="status"></span>
+
+  <script src="options.js"></script>
+</body>
+</html>

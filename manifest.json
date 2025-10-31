@@ -1,0 +1,21 @@
+{
+  "name": "Safari MRU Tab Switcher",
+  "description": "MRU tab switcher with HUD",
+  "version": "1.2.0",
+  "manifest_version": 3,
+  "permissions": ["tabs","storage"],
+  "host_permissions": ["<all_urls>"],
+  "background": { "service_worker": "background.js" },
+  "options_ui": {
+      "page": "options.html",
+      "open_in_tab": false
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content.js"],
+      "css": ["content.css"],
+      "run_at": "document_start"
+    }
+  ]
+}
