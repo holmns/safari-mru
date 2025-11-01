@@ -137,18 +137,126 @@ chrome.runtime.onInstalled.addListener(() => {
 });
 
 // --- HUD data & activation ---
-const faviconCache = new Map<TabId, string>();
+const faviconCacheByHost = new Map<string, string>();
+const faviconCacheByUrl = new Map<string, string>();
 
 async function delay(ms: number): Promise<void> {
   await new Promise((resolve) => setTimeout(resolve, ms));
 }
 
+function extractHostname(rawUrl?: string | null): string | null {
+  if (!rawUrl) return null;
+  try {
+    const url = new URL(rawUrl);
+    return url.hostname ? url.hostname.toLowerCase() : null;
+  } catch {
+    return null;
+  }
+}
+
+function blobToDataUrl(blob: Blob): Promise<string> {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onerror = () => reject(reader.error);
+    reader.onloadend = () => {
+      const result = typeof reader.result === "string" ? reader.result : null;
+      if (result) resolve(result);
+      else reject(new Error("Unable to read favicon blob"));
+    };
+    reader.readAsDataURL(blob);
+  });
+}
+
+async function fetchAsDataUrl(url: string): Promise<string | null> {
+  try {
+    const response = await fetch(url, {
+      credentials: "omit",
+      mode: "no-cors",
+    });
+
+    if (!response.ok && response.type !== "opaque") {
+      return null;
+    }
+
+    const blob = await response.blob();
+    return await blobToDataUrl(blob);
+  } catch {
+    return null;
+  }
+}
+
+async function resolveIcon(
+  tab: chrome.tabs.Tab & { id: number }
+): Promise<string | undefined> {
+  if (tab.favIconUrl?.startsWith("data:")) {
+    return tab.favIconUrl;
+  }
+
+  const canonicalUrl = tab.url ?? tab.pendingUrl ?? undefined;
+  const hostname = extractHostname(canonicalUrl);
+
+  if (tab.favIconUrl) {
+    const cachedByUrl = faviconCacheByUrl.get(tab.favIconUrl);
+    if (cachedByUrl) return cachedByUrl;
+  }
+
+  if (hostname) {
+    const cachedByHost = faviconCacheByHost.get(hostname);
+    if (cachedByHost) return cachedByHost;
+  }
+
+  const candidateUrls = [
+    tab.favIconUrl,
+    hostname
+      ? `https://www.google.com/s2/favicons?sz=64&domain=${encodeURIComponent(
+          hostname
+        )}`
+      : undefined,
+    hostname ? `https://icons.duckduckgo.com/ip3/${hostname}.ico` : undefined,
+  ].filter((url): url is string => Boolean(url));
+
+  for (const url of candidateUrls) {
+    const cached = faviconCacheByUrl.get(url);
+    if (cached) {
+      return cached;
+    }
+
+    const dataUrl = await fetchAsDataUrl(url);
+    if (dataUrl) {
+      faviconCacheByUrl.set(url, dataUrl);
+      if (hostname) faviconCacheByHost.set(hostname, dataUrl);
+      return dataUrl;
+    }
+  }
+
+  if (hostname) {
+    const fallback = `https://www.google.com/s2/favicons?sz=64&domain=${encodeURIComponent(
+      hostname
+    )}`;
+    faviconCacheByHost.set(hostname, fallback);
+    return fallback;
+  }
+
+  return tab.favIconUrl ?? undefined;
+}
+
 async function getHudItems(windowId: WindowId): Promise<HudItem[]> {
-  const stack = stacks.get(windowId) ?? [];
+  ensureWin(windowId);
+  let stack = stacks.get(windowId) ?? [];
+
+  if (stack.length === 0) {
+    await backfillMissingTabs(windowId);
+    stack = stacks.get(windowId) ?? [];
+  }
+
+  if (stack.length === 0 && stacks.size === 0) {
+    await seedAllWindows();
+    stack = stacks.get(windowId) ?? [];
+  }
+
   if (stack.length === 0) return [];
 
-  // Small delay helps Safari populate favIconUrl for newly-active tabs
-  await delay(10);
+  await delay(75);
 
   const tabs = await chrome.tabs.query({ windowId });
   const typedTabs = tabs.filter(
@@ -158,29 +266,18 @@ async function getHudItems(windowId: WindowId): Promise<HudItem[]> {
     typedTabs.map((tab) => [tab.id, tab])
   );
 
-  return stack
+  const orderedTabs = stack
     .map((id) => byId.get(id))
-    .filter((tab): tab is (typeof typedTabs)[number] => Boolean(tab?.id))
-    .map((tab) => {
-      let icon = tab.favIconUrl;
-      if (!icon) {
-        icon =
-          faviconCache.get(tab.id) ||
-          (tab.url
-            ? `https://www.google.com/s2/favicons?domain=${
-                new URL(tab.url).hostname
-              }`
-            : undefined);
-      } else {
-        faviconCache.set(tab.id, icon);
-      }
-      return {
-        id: tab.id,
-        title: tab.title ?? undefined,
-        favIconUrl: icon,
-        pinned: tab.pinned,
-      };
-    });
+    .filter((tab): tab is (typeof typedTabs)[number] => Boolean(tab?.id));
+
+  const icons = await Promise.all(orderedTabs.map((tab) => resolveIcon(tab)));
+
+  return orderedTabs.map((tab, idx) => ({
+    id: tab.id,
+    title: tab.title ?? undefined,
+    favIconUrl: icons[idx],
+    pinned: tab.pinned,
+  }));
 }
 
 async function activateAt(windowId: WindowId, position: number): Promise<void> {
