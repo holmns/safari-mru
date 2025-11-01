@@ -17,17 +17,16 @@
 		F4251C2B2EB52FE200D36FD4 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4251BEC2EB52FE100D36FD4 /* ViewController.swift */; };
 		F4251C2D2EB52FE200D36FD4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F4251BED2EB52FE200D36FD4 /* Assets.xcassets */; };
 		F4251C2F2EB52FE200D36FD4 /* SafariWebExtensionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4251BEF2EB52FE200D36FD4 /* SafariWebExtensionHandler.swift */; };
-		F4251C442EB52FE200D36FD4 /* background.js in Resources */ = {isa = PBXBuildFile; fileRef = F4251C412EB52FE200D36FD4 /* background.js */; };
 		F4251C452EB52FE200D36FD4 /* manifest.json in Resources */ = {isa = PBXBuildFile; fileRef = F4251C422EB52FE200D36FD4 /* manifest.json */; };
 		F4251C462EB52FE200D36FD4 /* SafariMRUProject in Resources */ = {isa = PBXBuildFile; fileRef = F4251C432EB52FE200D36FD4 /* SafariMRUProject */; };
-		F46177BE2EB54E4D00B26797 /* content.js in Resources */ = {isa = PBXBuildFile; fileRef = F46177BB2EB54E4D00B26797 /* content.js */; };
+		F46177BE2EB54E4D00B26797 /* dist in Resources */ = {isa = PBXBuildFile; fileRef = F46177BB2EB54E4D00B26797 /* dist */; };
 		F46177BF2EB54E4D00B26797 /* content.css in Resources */ = {isa = PBXBuildFile; fileRef = F46177BA2EB54E4D00B26797 /* content.css */; };
-		F46177C02EB54E4D00B26797 /* options.js in Resources */ = {isa = PBXBuildFile; fileRef = F46177BD2EB54E4D00B26797 /* options.js */; };
-		F46177C12EB54E4D00B26797 /* options.html in Resources */ = {isa = PBXBuildFile; fileRef = F46177BC2EB54E4D00B26797 /* options.html */; };
-		F46177C22EB54E4D00B26797 /* content.js in Resources */ = {isa = PBXBuildFile; fileRef = F46177BB2EB54E4D00B26797 /* content.js */; };
+		F46177C02EB54E4D00B26797 /* options-dist in Resources */ = {isa = PBXBuildFile; fileRef = F46177BC2EB54E4D00B26797 /* options-dist */; };
+		F46177C12EB54E4D00B26797 /* options-dist in Resources */ = {isa = PBXBuildFile; fileRef = F46177BC2EB54E4D00B26797 /* options-dist */; };
+		F46177C22EB54E4D00B26797 /* dist in Resources */ = {isa = PBXBuildFile; fileRef = F46177BB2EB54E4D00B26797 /* dist */; };
 		F46177C32EB54E4D00B26797 /* content.css in Resources */ = {isa = PBXBuildFile; fileRef = F46177BA2EB54E4D00B26797 /* content.css */; };
-		F46177C42EB54E4D00B26797 /* options.js in Resources */ = {isa = PBXBuildFile; fileRef = F46177BD2EB54E4D00B26797 /* options.js */; };
-		F46177C52EB54E4D00B26797 /* options.html in Resources */ = {isa = PBXBuildFile; fileRef = F46177BC2EB54E4D00B26797 /* options.html */; };
+		F46177C42EB54E4D00B26797 /* options-dist in Resources */ = {isa = PBXBuildFile; fileRef = F46177BC2EB54E4D00B26797 /* options-dist */; };
+		F46177C52EB54E4D00B26797 /* options-dist in Resources */ = {isa = PBXBuildFile; fileRef = F46177BC2EB54E4D00B26797 /* options-dist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -68,13 +67,11 @@
 		F4251C0D2EB52FE200D36FD4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F4251C1C2EB52FE200D36FD4 /* Safari MRU Extension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Safari MRU Extension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F4251C212EB52FE200D36FD4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		F4251C412EB52FE200D36FD4 /* background.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; name = background.js; path = ../../../background.js; sourceTree = "<group>"; };
-		F4251C422EB52FE200D36FD4 /* manifest.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; name = manifest.json; path = ../../../manifest.json; sourceTree = "<group>"; };
+		F4251C422EB52FE200D36FD4 /* manifest.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; name = manifest.json; path = ../../extension/manifest.json; sourceTree = SOURCE_ROOT; };
 		F4251C432EB52FE200D36FD4 /* SafariMRUProject */ = {isa = PBXFileReference; lastKnownFileType = folder; name = SafariMRUProject; path = ../..; sourceTree = "<group>"; };
-		F46177BA2EB54E4D00B26797 /* content.css */ = {isa = PBXFileReference; lastKnownFileType = text.css; name = content.css; path = "/Users/home/Documents/safari-mru/content.css"; sourceTree = "<absolute>"; };
-		F46177BB2EB54E4D00B26797 /* content.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; name = content.js; path = "/Users/home/Documents/safari-mru/content.js"; sourceTree = "<absolute>"; };
-		F46177BC2EB54E4D00B26797 /* options.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; name = options.html; path = "/Users/home/Documents/safari-mru/options.html"; sourceTree = "<absolute>"; };
-		F46177BD2EB54E4D00B26797 /* options.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; name = options.js; path = "/Users/home/Documents/safari-mru/options.js"; sourceTree = "<absolute>"; };
+		F46177BA2EB54E4D00B26797 /* content.css */ = {isa = PBXFileReference; lastKnownFileType = text.css; name = content.css; path = ../../extension/content.css; sourceTree = SOURCE_ROOT; };
+		F46177BB2EB54E4D00B26797 /* dist */ = {isa = PBXFileReference; lastKnownFileType = folder; name = dist; path = ../../extension/dist; sourceTree = SOURCE_ROOT; };
+		F46177BC2EB54E4D00B26797 /* options-dist */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "options-dist"; path = "../../extension/options-dist"; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -167,10 +164,8 @@
 			isa = PBXGroup;
 			children = (
 				F46177BA2EB54E4D00B26797 /* content.css */,
-				F46177BB2EB54E4D00B26797 /* content.js */,
-				F46177BC2EB54E4D00B26797 /* options.html */,
-				F46177BD2EB54E4D00B26797 /* options.js */,
-				F4251C412EB52FE200D36FD4 /* background.js */,
+				F46177BB2EB54E4D00B26797 /* dist */,
+				F46177BC2EB54E4D00B26797 /* options-dist */,
 				F4251C422EB52FE200D36FD4 /* manifest.json */,
 				F4251C432EB52FE200D36FD4 /* SafariMRUProject */,
 			);
@@ -265,10 +260,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				F4251C252EB52FE200D36FD4 /* Icon.png in Resources */,
-				F46177BE2EB54E4D00B26797 /* content.js in Resources */,
+				F46177BE2EB54E4D00B26797 /* dist in Resources */,
 				F46177BF2EB54E4D00B26797 /* content.css in Resources */,
-				F46177C02EB54E4D00B26797 /* options.js in Resources */,
-				F46177C12EB54E4D00B26797 /* options.html in Resources */,
+				F46177C02EB54E4D00B26797 /* options-dist in Resources */,
+				F46177C12EB54E4D00B26797 /* options-dist in Resources */,
 				F4251C272EB52FE200D36FD4 /* Style.css in Resources */,
 				F4251C0C2EB52FE200D36FD4 /* Main.storyboard in Resources */,
 				F4251C292EB52FE200D36FD4 /* Script.js in Resources */,
@@ -282,12 +277,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				F4251C462EB52FE200D36FD4 /* SafariMRUProject in Resources */,
-				F46177C22EB54E4D00B26797 /* content.js in Resources */,
+				F46177C22EB54E4D00B26797 /* dist in Resources */,
 				F46177C32EB54E4D00B26797 /* content.css in Resources */,
-				F46177C42EB54E4D00B26797 /* options.js in Resources */,
-				F46177C52EB54E4D00B26797 /* options.html in Resources */,
+				F46177C42EB54E4D00B26797 /* options-dist in Resources */,
+				F46177C52EB54E4D00B26797 /* options-dist in Resources */,
 				F4251C452EB52FE200D36FD4 /* manifest.json in Resources */,
-				F4251C442EB52FE200D36FD4 /* background.js in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -481,6 +475,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.holmns.safarimru.Extension;
 				PRODUCT_NAME = "Safari MRU Extension";
+				SAFARI_EXTENSION_BASE_URL = "$(PROJECT_DIR)/../../extension";
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
@@ -517,6 +512,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.holmns.safarimru.Extension;
 				PRODUCT_NAME = "Safari MRU Extension";
+				SAFARI_EXTENSION_BASE_URL = "$(PROJECT_DIR)/../../extension";
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;

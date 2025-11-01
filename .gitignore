@@ -20,4 +20,4 @@ build/
 *.p12
 
 # npm
-node_modules/
+**/node_modules/

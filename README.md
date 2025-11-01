@@ -3,6 +3,7 @@
 A lightweight Safari WebExtension that brings **MRU-style (Most Recently Used)** tab switching — similar to macOS app switching with ⌥ (Option) + Tab — directly into Safari.
 
 This project includes:
+
 - A full **WebExtension** (in `/extension`)
 - A **macOS Xcode wrapper project** (in `/SafariMRUProject`) that packages and signs the extension for Safari.
 
@@ -10,7 +11,7 @@ This project includes:
 
 ## ✨ Features
 
-- 🔁 **MRU tab switching** — Switch tabs in order of *most recently used*.
+- 🔁 **MRU tab switching** — Switch tabs in order of _most recently used_.
 - ⚡️ **Smooth HUD (Heads-Up Display)** — Displays a visual overlay of open tabs with icons.
 - 🎨 **Auto-adaptive design** — Modern, minimal UI centered on screen.
 - 🧭 **Configurable delay** — Adjust how long you hold ⌥ before the HUD appears.
@@ -21,14 +22,14 @@ This project includes:
 
 ## 🧩 Shortcuts
 
-| Action | Shortcut |
-|--------|-----------|
-| Switch forward  | ⌥ + Tab |
+| Action          | Shortcut    |
+| --------------- | ----------- |
+| Switch forward  | ⌥ + Tab     |
 | Switch backward | ⌥ + ⇧ + Tab |
 
 ---
 
-##  🎛 Configurations
+## 🎛 Configurations
 
 The extension’s settings can be adjusted from its Options page (Safari → Preferences → Extensions → Safari MRU → Settings…):
 
