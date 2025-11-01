@@ -8,10 +8,46 @@
     let visible = false;
     let hudTimer = null;
     let cycled = false;
-    let HUD_DELAY = 150;
-    chrome.storage.sync.get({ hudDelay: 150 }, (data) => {
-        const value = typeof data.hudDelay === "number" ? data.hudDelay : 150;
-        HUD_DELAY = value;
+    const DEFAULT_SETTINGS = { hudDelay: 150, layout: "horizontal" };
+    let HUD_DELAY = DEFAULT_SETTINGS.hudDelay;
+    let layout = DEFAULT_SETTINGS.layout;
+    function isLayout(value) {
+        return value === "horizontal" || value === "vertical";
+    }
+    function applyLayout() {
+        if (!hud)
+            return;
+        hud.classList.remove("horizontal", "vertical");
+        hud.classList.add(layout);
+    }
+    chrome.storage.sync.get({ hudDelay: DEFAULT_SETTINGS.hudDelay, layout: DEFAULT_SETTINGS.layout }, (data) => {
+        const delayValue = typeof data.hudDelay === "number" && Number.isFinite(data.hudDelay)
+            ? data.hudDelay
+            : DEFAULT_SETTINGS.hudDelay;
+        HUD_DELAY = delayValue;
+        const nextLayout = isLayout(data.layout) ? data.layout : DEFAULT_SETTINGS.layout;
+        layout = nextLayout;
+        applyLayout();
+    });
+    chrome.storage.onChanged.addListener((changes, areaName) => {
+        var _a, _b;
+        if (areaName !== "sync")
+            return;
+        if (Object.prototype.hasOwnProperty.call(changes, "hudDelay")) {
+            const next = (_a = changes.hudDelay) === null || _a === void 0 ? void 0 : _a.newValue;
+            if (typeof next === "number" && Number.isFinite(next)) {
+                HUD_DELAY = next;
+            }
+        }
+        if (Object.prototype.hasOwnProperty.call(changes, "layout")) {
+            const next = (_b = changes.layout) === null || _b === void 0 ? void 0 : _b.newValue;
+            if (isLayout(next)) {
+                layout = next;
+                applyLayout();
+                if (visible)
+                    render();
+            }
+        }
     });
     const optionKeys = new Set();
     let sessionActive = false;
@@ -45,6 +81,7 @@
         document.documentElement.appendChild(hudEl);
         hud = hudEl;
         listEl = listElement;
+        applyLayout();
     }
     function render() {
         ensureHud();

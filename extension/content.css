@@ -19,16 +19,30 @@
   overflow: visible;
 }
 
-/* Horizontal, wrapping list */
+/* Base list */
 #safari-mru-hud ul {
   margin: 0;
   padding: 0;
   list-style: none;
   display: flex;
-  flex-wrap: wrap;
   gap: 12px;
+}
+
+#safari-mru-hud.horizontal ul {
+  flex-direction: row;
+  flex-wrap: wrap;
   justify-content: center;
   align-items: flex-start;
+}
+
+#safari-mru-hud.vertical {
+  width: min(520px, 80vw);
+}
+
+#safari-mru-hud.vertical ul {
+  flex-direction: column;
+  flex-wrap: nowrap;
+  align-items: stretch;
 }
 
 /* Each tab entry */
@@ -40,7 +54,7 @@
   border-radius: 12px;
   background: rgba(255, 255, 255, 0.08);
   min-width: 180px;
-  max-width: 280px;
+  max-width: 320px;
   flex: 0 1 auto;
   white-space: nowrap;
   overflow: hidden;
@@ -50,6 +64,12 @@
   line-height: 1.5;
   box-sizing: border-box;
   align-content: center;
+}
+
+#safari-mru-hud.vertical li {
+  width: 100%;
+  max-width: none;
+  flex: 1 1 auto;
 }
 
 /* Selected tab highlight */

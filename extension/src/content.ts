@@ -12,6 +12,8 @@ type RuntimeMessage =
   | { type: "mru-request-active" }
   | { type: "mru-finalize"; index: number };
 
+type LayoutMode = "horizontal" | "vertical";
+
 (() => {
   // --- UI state ---
   let hud: HTMLDivElement | null = null;
@@ -21,11 +23,51 @@ type RuntimeMessage =
   let visible = false;
   let hudTimer: ReturnType<typeof setTimeout> | null = null;
   let cycled = false;
-  let HUD_DELAY = 150;
+  const DEFAULT_SETTINGS = { hudDelay: 150, layout: "horizontal" as LayoutMode };
+  let HUD_DELAY = DEFAULT_SETTINGS.hudDelay;
+  let layout: LayoutMode = DEFAULT_SETTINGS.layout;
 
-  chrome.storage.sync.get({ hudDelay: 150 }, (data: { hudDelay?: unknown }) => {
-    const value = typeof data.hudDelay === "number" ? data.hudDelay : 150;
-    HUD_DELAY = value;
+  function isLayout(value: unknown): value is LayoutMode {
+    return value === "horizontal" || value === "vertical";
+  }
+
+  function applyLayout(): void {
+    if (!hud) return;
+    hud.classList.remove("horizontal", "vertical");
+    hud.classList.add(layout);
+  }
+
+  chrome.storage.sync.get(
+    { hudDelay: DEFAULT_SETTINGS.hudDelay, layout: DEFAULT_SETTINGS.layout },
+    (data: { hudDelay?: unknown; layout?: unknown }) => {
+      const delayValue =
+        typeof data.hudDelay === "number" && Number.isFinite(data.hudDelay)
+          ? data.hudDelay
+          : DEFAULT_SETTINGS.hudDelay;
+      HUD_DELAY = delayValue;
+
+      const nextLayout = isLayout(data.layout) ? data.layout : DEFAULT_SETTINGS.layout;
+      layout = nextLayout;
+      applyLayout();
+    }
+  );
+
+  chrome.storage.onChanged.addListener((changes, areaName) => {
+    if (areaName !== "sync") return;
+    if (Object.prototype.hasOwnProperty.call(changes, "hudDelay")) {
+      const next = changes.hudDelay?.newValue;
+      if (typeof next === "number" && Number.isFinite(next)) {
+        HUD_DELAY = next;
+      }
+    }
+    if (Object.prototype.hasOwnProperty.call(changes, "layout")) {
+      const next = changes.layout?.newValue;
+      if (isLayout(next)) {
+        layout = next;
+        applyLayout();
+        if (visible) render();
+      }
+    }
   });
 
   // Track modifier keys to detect Option hold and release
@@ -63,6 +105,7 @@ type RuntimeMessage =
     document.documentElement.appendChild(hudEl);
     hud = hudEl;
     listEl = listElement;
+    applyLayout();
   }
 
   function render(): void {
