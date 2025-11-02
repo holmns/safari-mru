@@ -159,15 +159,16 @@ type LayoutMode = "horizontal" | "vertical";
     });
   }
 
-  function clampIndex(n: number): number {
+  function wrapIndex(n: number): number {
     if (!items.length) return 0;
-    const max = Math.max(0, items.length - 1);
-    return Math.max(0, Math.min(max, n));
+    const max = items.length;
+    const wrapped = ((n % max) + max) % max;
+    return wrapped;
   }
 
   // --- Keyboard handling ---
   function moveSelection(delta: number): void {
-    index = clampIndex(index + delta);
+    index = wrapIndex(index + delta);
     if (visible) render();
   }
 

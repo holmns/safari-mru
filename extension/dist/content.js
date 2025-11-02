@@ -133,15 +133,16 @@
             });
         });
     }
-    function clampIndex(n) {
+    function wrapIndex(n) {
         if (!items.length)
             return 0;
-        const max = Math.max(0, items.length - 1);
-        return Math.max(0, Math.min(max, n));
+        const max = items.length;
+        const wrapped = ((n % max) + max) % max;
+        return wrapped;
     }
     // --- Keyboard handling ---
     function moveSelection(delta) {
-        index = clampIndex(index + delta);
+        index = wrapIndex(index + delta);
         if (visible)
             render();
     }
