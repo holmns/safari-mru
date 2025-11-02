@@ -1,5 +1,5 @@
 /* Centered container */
-#safari-mru-hud {
+#swift-tab-hud {
   --hud-bg: rgba(22, 22, 26, 0.85);
   --hud-text: #fff;
   --hud-shadow: 0 16px 48px rgba(0, 0, 0, 0.45);
@@ -28,7 +28,7 @@
 }
 
 /* Base list */
-#safari-mru-hud ul {
+#swift-tab-hud ul {
   margin: 0;
   padding: 0;
   list-style: none;
@@ -36,25 +36,25 @@
   gap: 12px;
 }
 
-#safari-mru-hud.horizontal ul {
+#swift-tab-hud.horizontal ul {
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: center;
   align-items: flex-start;
 }
 
-#safari-mru-hud.vertical {
+#swift-tab-hud.vertical {
   width: min(520px, 80vw);
 }
 
-#safari-mru-hud.vertical ul {
+#swift-tab-hud.vertical ul {
   flex-direction: column;
   flex-wrap: nowrap;
   align-items: stretch;
 }
 
 /* Each tab entry */
-#safari-mru-hud li {
+#swift-tab-hud li {
   display: flex;
   align-items: center;
   gap: 10px;
@@ -75,21 +75,21 @@
   margin: 0;
 }
 
-#safari-mru-hud.vertical li {
+#swift-tab-hud.vertical li {
   width: 100%;
   max-width: none;
   flex: 1 1 auto;
 }
 
 /* Selected tab highlight */
-#safari-mru-hud li.selected {
+#swift-tab-hud li.selected {
   background: var(--item-selected-bg);
   outline: 3px solid var(--item-selected-outline);
   outline-offset: 2px;
 }
 
 /* Favicon & title */
-#safari-mru-hud img.favicon {
+#swift-tab-hud img.favicon {
   width: 20px;
   height: 20px;
   border-radius: 3px;
@@ -98,7 +98,7 @@
   display: block;
 }
 
-#safari-mru-hud .title {
+#swift-tab-hud .title {
   display: block;
   flex: 1 1 auto;
   overflow: hidden;
@@ -113,7 +113,7 @@
   color: var(--title-color);
 }
 
-#safari-mru-hud[data-theme="light"] {
+#swift-tab-hud[data-theme="light"] {
   --hud-bg: rgba(248, 250, 252, 0.85);
   --hud-text: #0f172a;
   --hud-shadow: 0 20px 40px rgba(15, 23, 42, 0.15);

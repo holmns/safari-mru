@@ -5,8 +5,8 @@ import moonIcon from "./assets/icons/moon.svg";
 
 const MIN_DELAY = 0;
 const MAX_DELAY = 1000;
-const FALLBACK_STORAGE_KEY = "safari-mru-options";
-const OPTIONS_THEME_STORAGE_KEY = "safari-mru-options-theme";
+const FALLBACK_STORAGE_KEY = "swift-tab-options";
+const OPTIONS_THEME_STORAGE_KEY = "swift-tab-options-theme";
 
 type LayoutMode = "horizontal" | "vertical";
 type ThemeMode = "dark" | "light" | "system";
@@ -271,7 +271,7 @@ function App() {
           <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
             <div className="space-y-1">
               <h1 className="text-3xl font-semibold tracking-tight text-slate-900 dark:text-slate-100">
-                MRU Switcher Settings
+                SwiftTab Settings
               </h1>
               <p className="text-sm leading-relaxed text-slate-600 dark:text-slate-300">
                 Tune the HUD layout, appearance, and advanced behavior.

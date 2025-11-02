@@ -18,15 +18,14 @@
 		F4251C2D2EB52FE200D36FD4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F4251BED2EB52FE200D36FD4 /* Assets.xcassets */; };
 		F4251C2F2EB52FE200D36FD4 /* SafariWebExtensionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4251BEF2EB52FE200D36FD4 /* SafariWebExtensionHandler.swift */; };
 		F4251C452EB52FE200D36FD4 /* manifest.json in Resources */ = {isa = PBXBuildFile; fileRef = F4251C422EB52FE200D36FD4 /* manifest.json */; };
-		F4251C462EB52FE200D36FD4 /* SafariMRUProject in Resources */ = {isa = PBXBuildFile; fileRef = F4251C432EB52FE200D36FD4 /* SafariMRUProject */; };
 		F46177BE2EB54E4D00B26797 /* dist in Resources */ = {isa = PBXBuildFile; fileRef = F46177BB2EB54E4D00B26797 /* dist */; };
 		F46177BF2EB54E4D00B26797 /* content.css in Resources */ = {isa = PBXBuildFile; fileRef = F46177BA2EB54E4D00B26797 /* content.css */; };
 		F46177C02EB54E4D00B26797 /* options-dist in Resources */ = {isa = PBXBuildFile; fileRef = F46177BC2EB54E4D00B26797 /* options-dist */; };
 		F46177C12EB54E4D00B26797 /* options-dist in Resources */ = {isa = PBXBuildFile; fileRef = F46177BC2EB54E4D00B26797 /* options-dist */; };
 		F46177C22EB54E4D00B26797 /* dist in Resources */ = {isa = PBXBuildFile; fileRef = F46177BB2EB54E4D00B26797 /* dist */; };
 		F46177C32EB54E4D00B26797 /* content.css in Resources */ = {isa = PBXBuildFile; fileRef = F46177BA2EB54E4D00B26797 /* content.css */; };
-		F46177C42EB54E4D00B26797 /* options-dist in Resources */ = {isa = PBXBuildFile; fileRef = F46177BC2EB54E4D00B26797 /* options-dist */; };
 		F46177C52EB54E4D00B26797 /* options-dist in Resources */ = {isa = PBXBuildFile; fileRef = F46177BC2EB54E4D00B26797 /* options-dist */; };
+		FE4E8A0B2FF07E5100C8B1A1 /* SwiftTabProject in Resources */ = {isa = PBXBuildFile; fileRef = FE4E8A0A2FF07E5100C8B1A1 /* SwiftTabProject */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -61,17 +60,17 @@
 		F4251BEC2EB52FE100D36FD4 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		F4251BED2EB52FE200D36FD4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		F4251BEF2EB52FE200D36FD4 /* SafariWebExtensionHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SafariWebExtensionHandler.swift; sourceTree = "<group>"; };
-		F4251C062EB52FE200D36FD4 /* Safari MRU.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Safari MRU.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		F4251C062EB52FE200D36FD4 /* SwiftTab.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwiftTab.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F4251C082EB52FE200D36FD4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F4251C0B2EB52FE200D36FD4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		F4251C0D2EB52FE200D36FD4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F4251C1C2EB52FE200D36FD4 /* Safari MRU Extension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Safari MRU Extension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F4251C212EB52FE200D36FD4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F4251C422EB52FE200D36FD4 /* manifest.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; name = manifest.json; path = ../../extension/manifest.json; sourceTree = SOURCE_ROOT; };
-		F4251C432EB52FE200D36FD4 /* SafariMRUProject */ = {isa = PBXFileReference; lastKnownFileType = folder; name = SafariMRUProject; path = ../..; sourceTree = "<group>"; };
 		F46177BA2EB54E4D00B26797 /* content.css */ = {isa = PBXFileReference; lastKnownFileType = text.css; name = content.css; path = ../../extension/content.css; sourceTree = SOURCE_ROOT; };
 		F46177BB2EB54E4D00B26797 /* dist */ = {isa = PBXFileReference; lastKnownFileType = folder; name = dist; path = ../../extension/dist; sourceTree = SOURCE_ROOT; };
 		F46177BC2EB54E4D00B26797 /* options-dist */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "options-dist"; path = "../../extension/options-dist"; sourceTree = SOURCE_ROOT; };
+		FE4E8A0A2FF07E5100C8B1A1 /* SwiftTabProject */ = {isa = PBXFileReference; lastKnownFileType = folder; name = SwiftTabProject; path = "../../SwiftTabProject"; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -136,7 +135,7 @@
 		F4251BF52EB52FE200D36FD4 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				F4251C062EB52FE200D36FD4 /* Safari MRU.app */,
+				F4251C062EB52FE200D36FD4 /* SwiftTab.app */,
 				F4251C1C2EB52FE200D36FD4 /* Safari MRU Extension.appex */,
 			);
 			name = Products;
@@ -167,7 +166,7 @@
 				F46177BB2EB54E4D00B26797 /* dist */,
 				F46177BC2EB54E4D00B26797 /* options-dist */,
 				F4251C422EB52FE200D36FD4 /* manifest.json */,
-				F4251C432EB52FE200D36FD4 /* SafariMRUProject */,
+				FE4E8A0A2FF07E5100C8B1A1 /* SwiftTabProject */,
 			);
 			name = Resources;
 			path = "Shared (Extension)";
@@ -176,9 +175,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		F4251C052EB52FE200D36FD4 /* Safari MRU (macOS) */ = {
+		F4251C052EB52FE200D36FD4 /* SwiftTab (macOS) */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = F4251C3D2EB52FE200D36FD4 /* Build configuration list for PBXNativeTarget "Safari MRU (macOS)" */;
+			buildConfigurationList = F4251C3D2EB52FE200D36FD4 /* Build configuration list for PBXNativeTarget "SwiftTab (macOS)" */;
 			buildPhases = (
 				F4251C022EB52FE200D36FD4 /* Sources */,
 				F4251C032EB52FE200D36FD4 /* Frameworks */,
@@ -190,16 +189,16 @@
 			dependencies = (
 				F4251C1F2EB52FE200D36FD4 /* PBXTargetDependency */,
 			);
-			name = "Safari MRU (macOS)";
+			name = "SwiftTab (macOS)";
 			packageProductDependencies = (
 			);
 			productName = "Safari MRU (macOS)";
-			productReference = F4251C062EB52FE200D36FD4 /* Safari MRU.app */;
+			productReference = F4251C062EB52FE200D36FD4 /* SwiftTab.app */;
 			productType = "com.apple.product-type.application";
 		};
-		F4251C1B2EB52FE200D36FD4 /* Safari MRU Extension (macOS) */ = {
+		F4251C1B2EB52FE200D36FD4 /* SwiftTab Extension (macOS) */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = F4251C392EB52FE200D36FD4 /* Build configuration list for PBXNativeTarget "Safari MRU Extension (macOS)" */;
+			buildConfigurationList = F4251C392EB52FE200D36FD4 /* Build configuration list for PBXNativeTarget "SwiftTab Extension (macOS)" */;
 			buildPhases = (
 				F4251C182EB52FE200D36FD4 /* Sources */,
 				F4251C192EB52FE200D36FD4 /* Frameworks */,
@@ -209,7 +208,7 @@
 			);
 			dependencies = (
 			);
-			name = "Safari MRU Extension (macOS)";
+			name = "SwiftTab Extension (macOS)";
 			packageProductDependencies = (
 			);
 			productName = "Safari MRU Extension (macOS)";
@@ -234,7 +233,7 @@
 					};
 				};
 			};
-			buildConfigurationList = F4251BE42EB52FE100D36FD4 /* Build configuration list for PBXProject "Safari MRU" */;
+			buildConfigurationList = F4251BE42EB52FE100D36FD4 /* Build configuration list for PBXProject "SwiftTab" */;
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -248,8 +247,8 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				F4251C052EB52FE200D36FD4 /* Safari MRU (macOS) */,
-				F4251C1B2EB52FE200D36FD4 /* Safari MRU Extension (macOS) */,
+				F4251C052EB52FE200D36FD4 /* SwiftTab (macOS) */,
+				F4251C1B2EB52FE200D36FD4 /* SwiftTab Extension (macOS) */,
 			);
 		};
 /* End PBXProject section */
@@ -276,11 +275,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F4251C462EB52FE200D36FD4 /* SafariMRUProject in Resources */,
 				F46177C22EB54E4D00B26797 /* dist in Resources */,
 				F46177C32EB54E4D00B26797 /* content.css in Resources */,
-				F46177C42EB54E4D00B26797 /* options-dist in Resources */,
 				F46177C52EB54E4D00B26797 /* options-dist in Resources */,
+				FE4E8A0B2FF07E5100C8B1A1 /* SwiftTabProject in Resources */,
 				F4251C452EB52FE200D36FD4 /* manifest.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -310,7 +308,7 @@
 /* Begin PBXTargetDependency section */
 		F4251C1F2EB52FE200D36FD4 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = F4251C1B2EB52FE200D36FD4 /* Safari MRU Extension (macOS) */;
+			target = F4251C1B2EB52FE200D36FD4 /* SwiftTab Extension (macOS) */;
 			targetProxy = F4251C1E2EB52FE200D36FD4 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -460,7 +458,7 @@
 				ENABLE_USER_SELECTED_FILES = readonly;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "macOS (Extension)/Info.plist";
-				INFOPLIST_KEY_CFBundleDisplayName = "Safari MRU Extension";
+				INFOPLIST_KEY_CFBundleDisplayName = "SwiftTab Extension";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -473,7 +471,7 @@
 					"-framework",
 					SafariServices,
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.holmns.safarimru.Extension;
+				PRODUCT_BUNDLE_IDENTIFIER = com.holmns.swifttab.Extension;
 				PRODUCT_NAME = "Safari MRU Extension";
 				SAFARI_EXTENSION_BASE_URL = "$(PROJECT_DIR)/../../extension";
 				SDKROOT = macosx;
@@ -497,7 +495,7 @@
 				ENABLE_USER_SELECTED_FILES = readonly;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "macOS (Extension)/Info.plist";
-				INFOPLIST_KEY_CFBundleDisplayName = "Safari MRU Extension";
+				INFOPLIST_KEY_CFBundleDisplayName = "SwiftTab Extension";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -510,7 +508,7 @@
 					"-framework",
 					SafariServices,
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.holmns.safarimru.Extension;
+				PRODUCT_BUNDLE_IDENTIFIER = com.holmns.swifttab.Extension;
 				PRODUCT_NAME = "Safari MRU Extension";
 				SAFARI_EXTENSION_BASE_URL = "$(PROJECT_DIR)/../../extension";
 				SDKROOT = macosx;
@@ -538,7 +536,7 @@
 				ENABLE_USER_SELECTED_FILES = readonly;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "macOS (App)/Info.plist";
-				INFOPLIST_KEY_CFBundleDisplayName = "Safari MRU";
+				INFOPLIST_KEY_CFBundleDisplayName = SwiftTab;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_NSMainStoryboardFile = Main;
 				INFOPLIST_KEY_NSPrincipalClass = NSApplication;
@@ -554,8 +552,8 @@
 					"-framework",
 					WebKit,
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.holmns.safarimru;
-				PRODUCT_NAME = "Safari MRU";
+				PRODUCT_BUNDLE_IDENTIFIER = com.holmns.swifttab;
+				PRODUCT_NAME = SwiftTab;
 				REGISTER_APP_GROUPS = YES;
 				SDKROOT = macosx;
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
@@ -582,7 +580,7 @@
 				ENABLE_USER_SELECTED_FILES = readonly;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "macOS (App)/Info.plist";
-				INFOPLIST_KEY_CFBundleDisplayName = "Safari MRU";
+				INFOPLIST_KEY_CFBundleDisplayName = SwiftTab;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_NSMainStoryboardFile = Main;
 				INFOPLIST_KEY_NSPrincipalClass = NSApplication;
@@ -598,8 +596,8 @@
 					"-framework",
 					WebKit,
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.holmns.safarimru;
-				PRODUCT_NAME = "Safari MRU";
+				PRODUCT_BUNDLE_IDENTIFIER = com.holmns.swifttab;
+				PRODUCT_NAME = SwiftTab;
 				REGISTER_APP_GROUPS = YES;
 				SDKROOT = macosx;
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
@@ -614,7 +612,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		F4251BE42EB52FE100D36FD4 /* Build configuration list for PBXProject "Safari MRU" */ = {
+		F4251BE42EB52FE100D36FD4 /* Build configuration list for PBXProject "SwiftTab" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				F4251C302EB52FE200D36FD4 /* Debug */,
@@ -623,7 +621,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		F4251C392EB52FE200D36FD4 /* Build configuration list for PBXNativeTarget "Safari MRU Extension (macOS)" */ = {
+		F4251C392EB52FE200D36FD4 /* Build configuration list for PBXNativeTarget "SwiftTab Extension (macOS)" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				F4251C3A2EB52FE200D36FD4 /* Debug */,
@@ -632,7 +630,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		F4251C3D2EB52FE200D36FD4 /* Build configuration list for PBXNativeTarget "Safari MRU (macOS)" */ = {
+		F4251C3D2EB52FE200D36FD4 /* Build configuration list for PBXNativeTarget "SwiftTab (macOS)" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				F4251C3E2EB52FE200D36FD4 /* Debug */,

@@ -90,7 +90,7 @@ const FALLBACK_FAVICON_DATA_URI =
   function ensureHud(): void {
     if (state.hud) return;
     const hudEl = document.createElement("div");
-    hudEl.id = "safari-mru-hud";
+    hudEl.id = "swift-tab-hud";
     const listElement = document.createElement("ul");
     hudEl.appendChild(listElement);
     document.documentElement.appendChild(hudEl);

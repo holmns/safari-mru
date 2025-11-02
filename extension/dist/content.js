@@ -54,7 +54,7 @@ const FALLBACK_FAVICON_DATA_URI = 'data:image/svg+xml;utf8,<svg xmlns="http://ww
         if (state.hud)
             return;
         const hudEl = document.createElement("div");
-        hudEl.id = "safari-mru-hud";
+        hudEl.id = "swift-tab-hud";
         const listElement = document.createElement("ul");
         hudEl.appendChild(listElement);
         document.documentElement.appendChild(hudEl);

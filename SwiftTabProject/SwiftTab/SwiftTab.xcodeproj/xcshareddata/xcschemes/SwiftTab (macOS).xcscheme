@@ -16,9 +16,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "F4251C052EB52FE200D36FD4"
-               BuildableName = "Safari MRU.app"
-               BlueprintName = "Safari MRU (macOS)"
-               ReferencedContainer = "container:Safari MRU.xcodeproj">
+               BuildableName = "SwiftTab.app"
+               BlueprintName = "SwiftTab (macOS)"
+               ReferencedContainer = "container:SwiftTab.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -45,9 +45,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "F4251C052EB52FE200D36FD4"
-            BuildableName = "Safari MRU.app"
-            BlueprintName = "Safari MRU (macOS)"
-            ReferencedContainer = "container:Safari MRU.xcodeproj">
+            BuildableName = "SwiftTab.app"
+            BlueprintName = "SwiftTab (macOS)"
+            ReferencedContainer = "container:SwiftTab.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -62,9 +62,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "F4251C052EB52FE200D36FD4"
-            BuildableName = "Safari MRU.app"
-            BlueprintName = "Safari MRU (macOS)"
-            ReferencedContainer = "container:Safari MRU.xcodeproj">
+            BuildableName = "SwiftTab.app"
+            BlueprintName = "SwiftTab (macOS)"
+            ReferencedContainer = "container:SwiftTab.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
