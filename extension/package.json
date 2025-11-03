@@ -4,7 +4,9 @@
   "description": "",
   "main": "background.js",
   "scripts": {
-    "build": "tsc -p tsconfig.json && node scripts/postbuild.js",
+    "build": "npm run build:extension && npm run build:options",
+    "build:extension": "tsc -p tsconfig.json && node scripts/postbuild.js",
+    "build:options": "npm run build --prefix options-app",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
