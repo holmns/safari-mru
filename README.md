@@ -11,10 +11,8 @@ This repository contains:
 
 - 🔁 **MRU ordering** — Cycle through tabs in the order you last viewed them.
 - ⚡️ **Heads-up display** — Minimal overlay shows tab titles and favicons while you switch.
-- 🎨 **Adaptive layout** — Centers on screen and respects light / dark appearance.
 - 🧭 **Customizable delay** — Tune how long you hold ⌥ before the HUD appears.
-- 🧩 **Window awareness** — Keeps the MRU list accurate as windows and tabs change.
-- 🛠 **Native packaging** — Delivered as a signed Safari app extension.
+- 🛠 **Native packaging** — Delivered as a signed Safari app extension, optimized for performance and battery usage.
 
 ## 🎮 Shortcuts
 
@@ -32,6 +30,15 @@ This repository contains:
 4. When Safari prompts you, enable **SwiftTab** from Safari Settings → Extensions.
 
 During development you can iterate on the WebExtension in `/extension`. Rebuilding the Xcode target bundles the latest assets.
+
+## 🧑‍💻 Development Workflow
+
+1. `cd extension && npm install`
+2. `npm run build:extension` compiles the background and content scripts, inlines shared helpers, and writes to `dist/`.
+3. `npm run build:options` (or the top-level `npm run build`) updates the options UI bundle.
+4. Re-run the Xcode scheme or reload the extension in Safari to pick up the refreshed artifacts.
+
+The background service worker reads MRU stacks from storage on launch and debounces writes back to `chrome.storage.session` (falling back to `chrome.storage.local`). An `onSuspend` hook flushes pending writes so state remains consistent even when Safari idles the worker.
 
 ## 🛠 Settings
 
