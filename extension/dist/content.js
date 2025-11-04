@@ -92,7 +92,6 @@ const FALLBACK_FAVICON_DATA_URI = 'data:image/svg+xml;utf8,<svg xmlns="http://ww
             return;
         state.list.innerHTML = "";
         state.items.forEach((tab, i) => {
-            var _a;
             const li = document.createElement("li");
             if (i === state.index)
                 li.classList.add("selected");
@@ -107,7 +106,7 @@ const FALLBACK_FAVICON_DATA_URI = 'data:image/svg+xml;utf8,<svg xmlns="http://ww
             };
             const span = document.createElement("span");
             span.className = "title";
-            span.textContent = (_a = tab.title) !== null && _a !== void 0 ? _a : "Untitled";
+            span.textContent = tab.title;
             li.appendChild(img);
             li.appendChild(span);
             state.list.appendChild(li);

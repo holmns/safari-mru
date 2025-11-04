@@ -33,9 +33,12 @@ const FALLBACK_FAVICON_DATA_URI =
 
   function readSettings(): Promise<HudSettings> {
     return new Promise((resolve) => {
-      chrome.storage.sync.get(DEFAULT_SETTINGS, (data: Partial<HudSettings>) => {
-        resolve(normalizeHudSettings(data));
-      });
+      chrome.storage.sync.get(
+        DEFAULT_SETTINGS,
+        (data: Partial<HudSettings>) => {
+          resolve(normalizeHudSettings(data));
+        }
+      );
     });
   }
 
@@ -85,7 +88,7 @@ const FALLBACK_FAVICON_DATA_URI =
 
       const span = document.createElement("span");
       span.className = "title";
-      span.textContent = tab.title ?? "Untitled";
+      span.textContent = tab.title;
 
       li.appendChild(img);
       li.appendChild(span);

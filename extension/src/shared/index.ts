@@ -64,7 +64,7 @@ export function normalizeHudSettings(
 
 export interface HudItem {
   id: TabId;
-  title?: string;
+  title: string;
   favIconUrl?: string;
   pinned?: boolean;
 }
