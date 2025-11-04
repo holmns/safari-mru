@@ -64,6 +64,24 @@ const FALLBACK_FAVICON_DATA_URI = 'data:image/svg+xml;utf8,<svg xmlns="http://ww
         colorSchemeQuery: null,
     };
     const COLOR_SCHEME_QUERY = "(prefers-color-scheme: dark)";
+    async function exitFullscreenIfNeeded() {
+        var _a;
+        const doc = document;
+        const fullscreenElement = (_a = doc.fullscreenElement) !== null && _a !== void 0 ? _a : doc.webkitFullscreenElement;
+        if (!fullscreenElement)
+            return;
+        try {
+            if (typeof doc.exitFullscreen === "function") {
+                await doc.exitFullscreen();
+            }
+            else if (typeof doc.webkitExitFullscreen === "function") {
+                await Promise.resolve(doc.webkitExitFullscreen());
+            }
+        }
+        catch (error) {
+            console.warn("[SwiftTab] Failed to exit fullscreen", error);
+        }
+    }
     function readSettings() {
         return new Promise((resolve) => {
             chrome.storage.sync.get(DEFAULT_SETTINGS, (data) => {
@@ -162,6 +180,7 @@ const FALLBACK_FAVICON_DATA_URI = 'data:image/svg+xml;utf8,<svg xmlns="http://ww
         }
     }
     async function finalize() {
+        await exitFullscreenIfNeeded();
         chrome.runtime.sendMessage({
             type: "mru-finalize",
             index: state.index,

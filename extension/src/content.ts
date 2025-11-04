@@ -31,6 +31,24 @@ const FALLBACK_FAVICON_DATA_URI =
 
   const COLOR_SCHEME_QUERY = "(prefers-color-scheme: dark)";
 
+  async function exitFullscreenIfNeeded(): Promise<void> {
+    const doc = document as Document & {
+      webkitExitFullscreen?: () => Promise<void> | void;
+      webkitFullscreenElement?: Element | null;
+    };
+    const fullscreenElement = doc.fullscreenElement ?? doc.webkitFullscreenElement;
+    if (!fullscreenElement) return;
+    try {
+      if (typeof doc.exitFullscreen === "function") {
+        await doc.exitFullscreen();
+      } else if (typeof doc.webkitExitFullscreen === "function") {
+        await Promise.resolve(doc.webkitExitFullscreen());
+      }
+    } catch (error) {
+      console.warn("[SwiftTab] Failed to exit fullscreen", error);
+    }
+  }
+
   function readSettings(): Promise<HudSettings> {
     return new Promise((resolve) => {
       chrome.storage.sync.get(
@@ -140,6 +158,7 @@ const FALLBACK_FAVICON_DATA_URI =
   }
 
   async function finalize(): Promise<void> {
+    await exitFullscreenIfNeeded();
     chrome.runtime.sendMessage({
       type: "mru-finalize",
       index: state.index,
