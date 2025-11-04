@@ -121,73 +121,41 @@ const faviconStore = (() => {
             return null;
         }
     }
-    function blobToDataUrl(blob) {
-        return new Promise((resolve, reject) => {
-            const reader = new FileReader();
-            reader.onerror = () => reject(reader.error);
-            reader.onloadend = () => {
-                if (typeof reader.result === "string")
-                    resolve(reader.result);
-                else
-                    reject(new Error("Unable to read favicon blob"));
-            };
-            reader.readAsDataURL(blob);
-        });
-    }
-    async function fetchAsDataUrl(url) {
-        try {
-            const response = await fetch(url, {
-                credentials: "omit",
-                mode: "no-cors",
-            });
-            if (!response.ok && response.type !== "opaque")
-                return null;
-            const blob = await response.blob();
-            return await blobToDataUrl(blob);
-        }
-        catch {
-            return null;
-        }
-    }
     async function resolve(tab) {
         var _a, _b, _c;
         if ((_a = tab.favIconUrl) === null || _a === void 0 ? void 0 : _a.startsWith("data:")) {
+            console.log("[SwiftTab] Using data URI favicon for tab", tab.id);
             return tab.favIconUrl;
         }
         const canonicalUrl = (_c = (_b = tab.url) !== null && _b !== void 0 ? _b : tab.pendingUrl) !== null && _c !== void 0 ? _c : undefined;
         const hostname = extractHostname(canonicalUrl);
         if (tab.favIconUrl) {
+            console.log("[SwiftTab] Using favicon url for", tab.title);
             const cachedByUrl = byUrl.get(tab.favIconUrl);
             if (cachedByUrl)
                 return cachedByUrl;
+            byUrl.set(tab.favIconUrl, tab.favIconUrl);
+            if (hostname)
+                byHost.set(hostname, tab.favIconUrl);
+            return tab.favIconUrl;
         }
-        if (hostname) {
-            const cachedByHost = byHost.get(hostname);
-            if (cachedByHost)
-                return cachedByHost;
+        if (!hostname) {
+            console.log("[SwiftTab] No Hostname. Fallback favicon for tab", tab.title);
+            return FALLBACK_ICON_DATA_URI;
         }
-        const candidateUrls = [
-            tab.favIconUrl,
-            hostname
-                ? `https://www.google.com/s2/favicons?sz=64&domain=${encodeURIComponent(hostname)}`
-                : undefined,
-            hostname ? `https://icons.duckduckgo.com/ip3/${hostname}.ico` : undefined,
-        ].filter((url) => Boolean(url));
-        for (const url of candidateUrls) {
-            const cached = byUrl.get(url);
-            if (cached)
-                return cached;
-            const dataUrl = await fetchAsDataUrl(url);
-            if (dataUrl) {
-                byUrl.set(url, dataUrl);
-                if (hostname)
-                    byHost.set(hostname, dataUrl);
-                return dataUrl;
-            }
-        }
-        if (hostname)
+        const cachedByHost = byHost.get(hostname);
+        if (cachedByHost)
+            return cachedByHost;
+        const ddgFaviconUrl = `https://icons.duckduckgo.com/ip3/${hostname}.ico`;
+        const res = await fetch(ddgFaviconUrl);
+        if (!res.ok) {
             byHost.set(hostname, FALLBACK_ICON_DATA_URI);
-        return FALLBACK_ICON_DATA_URI;
+            console.log("[SwiftTab] Hostname exists:", hostname, " Fallback favicon for", tab.title);
+            return FALLBACK_ICON_DATA_URI;
+        }
+        byHost.set(hostname, ddgFaviconUrl);
+        console.log("[SwiftTab] DuckDuckGo favicon for hostname:", hostname, " tab", tab.title);
+        return ddgFaviconUrl;
     }
     return {
         resolve,
