@@ -524,15 +524,13 @@ function registerListeners(): void {
     (msg: HudMessage, _sender, sendResponse) => {
       if (msg?.type === "mru-request") {
         void (async () => {
-          const [activeTab] = await chrome.tabs.query({
-            active: true,
-            currentWindow: true,
-          });
-          const items =
-            activeTab?.windowId !== undefined
-              ? await getHudItems(activeTab.windowId)
-              : [];
-          sendResponse({ items });
+          const win = await chrome.windows.getCurrent();
+          if (win?.id !== undefined) {
+            const items = await getHudItems(win.id);
+            sendResponse({ items });
+          } else {
+            sendResponse({ items: [] });
+          }
         })();
         return true;
       }
