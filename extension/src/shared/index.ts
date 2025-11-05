@@ -91,8 +91,13 @@ export interface HudItemsResponse {
   items?: HudItem[];
 }
 
-export type HudRequestMessage = { type: "mru-request" };
+export interface HudRequestMessage {
+  type: "mru-request";
+}
 
-export type HudFinalizeMessage = { type: "mru-finalize"; index?: number };
+export interface HudFinalizeMessage {
+  type: "mru-finalize";
+  index?: number;
+}
 
 export type HudMessage = HudRequestMessage | HudFinalizeMessage;

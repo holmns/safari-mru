@@ -34,8 +34,7 @@ type ModifierKeyCode = "AltLeft" | "AltRight";
       webkitExitFullscreen?: () => Promise<void> | void;
       webkitFullscreenElement?: Element | null;
     };
-    const fullscreenElement =
-      doc.fullscreenElement ?? doc.webkitFullscreenElement;
+    const fullscreenElement = doc.fullscreenElement ?? doc.webkitFullscreenElement;
     if (!fullscreenElement) return;
     try {
       if (typeof doc.exitFullscreen === "function") {
@@ -50,12 +49,9 @@ type ModifierKeyCode = "AltLeft" | "AltRight";
 
   function readSettings(): Promise<HudSettings> {
     return new Promise((resolve) => {
-      chrome.storage.sync.get(
-        DEFAULT_SETTINGS,
-        (data: Partial<HudSettings>) => {
-          resolve(normalizeHudSettings(data));
-        }
-      );
+      chrome.storage.sync.get(DEFAULT_SETTINGS, (data: Partial<HudSettings>) => {
+        resolve(normalizeHudSettings(data));
+      });
     });
   }
 
@@ -257,11 +253,7 @@ type ModifierKeyCode = "AltLeft" | "AltRight";
     }
     if (Object.prototype.hasOwnProperty.call(changes, "theme")) {
       const maybeTheme = changes.theme?.newValue;
-      if (
-        maybeTheme === "dark" ||
-        maybeTheme === "light" ||
-        maybeTheme === "system"
-      ) {
+      if (maybeTheme === "dark" || maybeTheme === "light" || maybeTheme === "system") {
         nextSettings.theme = maybeTheme;
       }
     }

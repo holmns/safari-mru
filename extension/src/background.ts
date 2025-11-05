@@ -49,10 +49,7 @@ const mruStore = (() => {
     await new Promise<void>((resolve) => {
       const callback = () => {
         if (chrome.runtime.lastError) {
-          console.warn(
-            "[SwiftTab] Failed to persist MRU stacks",
-            chrome.runtime.lastError
-          );
+          console.warn("[SwiftTab] Failed to persist MRU stacks", chrome.runtime.lastError);
         }
         resolve();
       };
@@ -69,9 +66,7 @@ const mruStore = (() => {
     persistTimer = setTimeout(() => {
       persistTimer = null;
       persistPromise = persistStacks()
-        .catch((error) =>
-          console.warn("[SwiftTab] Persist MRU failed unexpectedly", error)
-        )
+        .catch((error) => console.warn("[SwiftTab] Persist MRU failed unexpectedly", error))
         .finally(() => {
           persistPromise = null;
         });
@@ -88,9 +83,7 @@ const mruStore = (() => {
       return;
     }
     persistPromise = persistStacks()
-      .catch((error) =>
-        console.warn("[SwiftTab] Persist MRU failed unexpectedly", error)
-      )
+      .catch((error) => console.warn("[SwiftTab] Persist MRU failed unexpectedly", error))
       .finally(() => {
         persistPromise = null;
       });
@@ -101,18 +94,13 @@ const mruStore = (() => {
     await new Promise<void>((resolve) => {
       storageArea.get(MRU_STORAGE_KEY, (items) => {
         if (chrome.runtime.lastError) {
-          console.warn(
-            "[SwiftTab] Failed to load MRU stacks",
-            chrome.runtime.lastError
-          );
+          console.warn("[SwiftTab] Failed to load MRU stacks", chrome.runtime.lastError);
           resolve();
           return;
         }
         const raw = items?.[MRU_STORAGE_KEY];
         if (raw && typeof raw === "object") {
-          for (const [key, value] of Object.entries(
-            raw as Record<string, unknown>
-          )) {
+          for (const [key, value] of Object.entries(raw as Record<string, unknown>)) {
             const windowId = Number(key);
             if (!Number.isInteger(windowId)) continue;
             const sanitized = sanitizeStack(value);
@@ -296,8 +284,7 @@ const faviconStore = (() => {
         typeof reader.result === "string" && reader.result.startsWith("data:")
           ? resolve(reader.result)
           : reject(new Error("Invalid result"));
-      reader.onerror = () =>
-        reject(reader.error ?? new Error("FileReader error"));
+      reader.onerror = () => reject(reader.error ?? new Error("FileReader error"));
       reader.readAsDataURL(blob);
     });
   }
@@ -341,11 +328,7 @@ const faviconStore = (() => {
         byHost.set(hostname, dataUri);
         return dataUri;
       } catch (error) {
-        console.warn(
-          "[SwiftTab] Failed to fetch DuckDuckGo favicon",
-          hostname,
-          error
-        );
+        console.warn("[SwiftTab] Failed to fetch DuckDuckGo favicon", hostname, error);
         byHost.set(hostname, FALLBACK_FAVICON_DATA_URI);
         return FALLBACK_FAVICON_DATA_URI;
       } finally {
@@ -357,9 +340,7 @@ const faviconStore = (() => {
     return promise;
   }
 
-  async function resolve(
-    tab: chrome.tabs.Tab & { id: number }
-  ): Promise<string> {
+  async function resolve(tab: chrome.tabs.Tab & { id: number }): Promise<string> {
     if (tab.favIconUrl?.startsWith("data:")) {
       console.log("[SwiftTab] Using data URI favicon for tab", tab.id);
       return tab.favIconUrl;
@@ -373,10 +354,7 @@ const faviconStore = (() => {
     const hostname = extractHostname(canonicalUrl);
 
     if (!hostname) {
-      console.log(
-        "[SwiftTab] No Hostname. Fallback favicon for tab",
-        tab.title
-      );
+      console.log("[SwiftTab] No Hostname. Fallback favicon for tab", tab.title);
       return FALLBACK_FAVICON_DATA_URI;
     }
 
@@ -412,17 +390,13 @@ async function getHudItems(windowId: WindowId): Promise<HudItem[]> {
   const typedTabs = tabs.filter(
     (tab): tab is chrome.tabs.Tab & { id: number } => tab.id !== undefined
   );
-  const byId = new Map<TabId, (typeof typedTabs)[number]>(
-    typedTabs.map((tab) => [tab.id, tab])
-  );
+  const byId = new Map<TabId, (typeof typedTabs)[number]>(typedTabs.map((tab) => [tab.id, tab]));
 
   const orderedTabs = stack
     .map((id) => byId.get(id))
     .filter((tab): tab is (typeof typedTabs)[number] => Boolean(tab?.id));
 
-  const icons = await Promise.all(
-    orderedTabs.map((tab) => faviconStore.resolve(tab))
-  );
+  const icons = await Promise.all(orderedTabs.map((tab) => faviconStore.resolve(tab)));
 
   return orderedTabs.map((tab, idx) => ({
     id: tab.id,
@@ -512,33 +486,31 @@ function registerListeners(): void {
     });
   }
 
-  chrome.runtime.onMessage.addListener(
-    (msg: HudMessage, _sender, sendResponse) => {
-      if (msg?.type === "mru-request") {
-        void (async () => {
-          const win = await chrome.windows.getCurrent();
-          if (win?.id !== undefined) {
-            const items = await getHudItems(win.id);
-            sendResponse({ items });
-          } else {
-            sendResponse({ items: [] });
-          }
-        })();
-        return true;
-      }
-
-      if (msg?.type === "mru-finalize") {
-        void (async () => {
-          const win = await chrome.windows.getCurrent();
-          if (win?.id !== undefined) {
-            await activateAt(win.id, Math.max(0, msg.index ?? 1));
-          }
-        })();
-      }
-
-      return false;
+  chrome.runtime.onMessage.addListener((msg: HudMessage, _sender, sendResponse) => {
+    if (msg?.type === "mru-request") {
+      void (async () => {
+        const win = await chrome.windows.getCurrent();
+        if (win?.id !== undefined) {
+          const items = await getHudItems(win.id);
+          sendResponse({ items });
+        } else {
+          sendResponse({ items: [] });
+        }
+      })();
+      return true;
     }
-  );
+
+    if (msg?.type === "mru-finalize") {
+      void (async () => {
+        const win = await chrome.windows.getCurrent();
+        if (win?.id !== undefined) {
+          await activateAt(win.id, Math.max(0, msg.index ?? 1));
+        }
+      })();
+    }
+
+    return false;
+  });
 }
 
 registerListeners();

@@ -1,0 +1,6 @@
+dist/
+options-dist/
+node_modules/
+scripts/
+options-app/**
+.eslintrc.cjs
