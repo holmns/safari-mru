@@ -11,8 +11,8 @@
     "open_in_tab": false
   },
   "commands": {
-    "swift-tab-search": {
-      "description": "Search Tabs",
+    "swift-tab-toggle-search": {
+      "description": "Toggle Search Tabs",
       "suggested_key": {
         "default": "Ctrl+E",
         "mac": "Command+E"

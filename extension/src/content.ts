@@ -43,6 +43,7 @@ type SessionMode = "altTab" | "command" | null;
     mode: null as SessionMode,
     query: "",
     isFetchingCommand: false,
+    cancelCommandToggle: false,
   };
 
   async function exitFullscreenIfNeeded(): Promise<void> {
@@ -375,6 +376,7 @@ type SessionMode = "altTab" | "command" | null;
     state.sessionActive = false;
     state.pendingMoves = 0;
     state.cycled = false;
+    state.cancelCommandToggle = false;
   }
 
   function requestItems(): Promise<HudItem[]> {
@@ -524,6 +526,13 @@ type SessionMode = "altTab" | "command" | null;
     try {
       const items = await requestItems();
       state.items = items;
+
+      if (state.cancelCommandToggle) {
+        state.cancelCommandToggle = false;
+        state.mode = null;
+        hide();
+        return;
+      }
       state.query = "";
       state.filteredItems = [...items];
       state.filterIndex = state.filteredItems.length > 0 ? 0 : -1;
@@ -757,7 +766,16 @@ type SessionMode = "altTab" | "command" | null;
 
   chrome.runtime.onMessage.addListener((message: HudMessage | ContentCommandMessage) => {
     if (!message || typeof message !== "object") return;
-    if (message.type === "hud-start-search") {
+    if (message.type === "hud-toggle-search") {
+      if (state.mode === "command") {
+        if (state.isFetchingCommand) {
+          state.cancelCommandToggle = true;
+          return;
+        }
+        hide();
+        return;
+      }
+      state.cancelCommandToggle = false;
       void startCommandSession();
     }
   });

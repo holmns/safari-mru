@@ -106,8 +106,8 @@ export interface HudFinalizeMessage {
 
 export type HudMessage = HudRequestMessage | HudFinalizeMessage;
 
-export interface HudSearchCommand {
-  type: "hud-start-search";
+export interface HudToggleSearchCommand {
+  type: "hud-toggle-search";
 }
 
-export type ContentCommandMessage = HudSearchCommand;
+export type ContentCommandMessage = HudToggleSearchCommand;
