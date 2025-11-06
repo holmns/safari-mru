@@ -645,6 +645,8 @@ type SessionMode = "altTab" | "command" | null;
       if (state.mode === "command" && state.visible) {
         const searchFocused = state.search !== null && event.target === state.search;
         const keyLower = event.key.toLowerCase();
+        const isCtrlJ = event.ctrlKey && keyLower === "j";
+        const isCtrlK = event.ctrlKey && keyLower === "k";
 
         if (event.key === "Escape") {
           event.preventDefault();
@@ -659,25 +661,23 @@ type SessionMode = "altTab" | "command" | null;
         }
 
         if (keyLower === "tab") {
+          if (searchFocused) {
+            return;
+          }
           event.preventDefault();
           moveSelection(event.shiftKey ? -1 : 1);
           return;
         }
 
-        if (!searchFocused && (event.key === "ArrowDown" || event.key === "ArrowRight")) {
+        if ((event.key === "ArrowDown" && !searchFocused) || isCtrlJ) {
           event.preventDefault();
           moveSelection(1);
           return;
         }
 
-        if (!searchFocused && (event.key === "ArrowUp" || event.key === "ArrowLeft")) {
+        if ((event.key === "ArrowUp" && !searchFocused) || isCtrlK) {
           event.preventDefault();
           moveSelection(-1);
-          return;
-        }
-
-        const handledBySearch = new Set(["ArrowDown", "ArrowUp", "ArrowLeft", "ArrowRight"]);
-        if (searchFocused && handledBySearch.has(event.key)) {
           return;
         }
 
