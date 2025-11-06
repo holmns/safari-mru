@@ -11,15 +11,20 @@ This repository contains:
 
 - 🔁 **MRU ordering** — Cycle through tabs in the order you last viewed them.
 - ⚡️ **Heads-up display** — Minimal overlay shows tab titles and favicons while you switch.
+- 🔍 **Fuzzy search HUD** — Toggle a searchable list of tabs with your own shortcut.
 - 🧭 **Customizable delay** — Tune how long you hold ⌥ before the HUD appears.
 - 🛠 **Native packaging** — Delivered as a signed Safari app extension, optimized for performance and battery usage.
 
 ## 🎮 Shortcuts
 
-| Action          | Shortcut    |
-| --------------- | ----------- |
-| Switch forward  | ⌥ + Tab     |
-| Switch backward | ⌥ + ⇧ + Tab |
+| Action                        | Shortcut / Location                               |
+| ----------------------------- | ------------------------------------------------- |
+| Switch forward                | ⌥ + Tab                                           |
+| Switch backward               | ⌥ + ⇧ + Tab                                       |
+| Toggle search HUD             | Assign in Safari → Extensions → SwiftTab → Shortcuts |
+| Move selection (search HUD)   | ↑ / ↓, ⇥ / ⇧⇥, or ⌃J / ⌃K                         |
+
+The search HUD behaves as a toggle: press your custom shortcut (default suggestion is ⌘E / Ctrl+E) to open it, press it again or hit Escape to close.
 
 ## 🚀 Getting Started
 
