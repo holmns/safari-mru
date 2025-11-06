@@ -475,20 +475,10 @@ type SessionMode = "altTab" | "command" | null;
   function updateFilter(): void {
     if (state.mode !== "command") return;
 
-    const previousSelectedId = state.filteredItems[state.filterIndex]?.id ?? null;
-
     const normalized = state.query.trim().toLowerCase();
     if (!normalized) {
       state.filteredItems = [...state.items];
-      if (previousSelectedId !== null) {
-        const preservedIndex = state.filteredItems.findIndex(
-          (item) => item.id === previousSelectedId
-        );
-        state.filterIndex =
-          preservedIndex >= 0 ? preservedIndex : state.filteredItems.length > 0 ? 0 : -1;
-      } else {
-        state.filterIndex = state.filteredItems.length > 0 ? 0 : -1;
-      }
+      state.filterIndex = state.filteredItems.length > 0 ? 0 : -1;
       render();
       return;
     }
@@ -516,15 +506,7 @@ type SessionMode = "altTab" | "command" | null;
     });
 
     state.filteredItems = matches.map((entry) => entry.item);
-    if (previousSelectedId !== null) {
-      const preservedIndex = state.filteredItems.findIndex(
-        (item) => item.id === previousSelectedId
-      );
-      state.filterIndex =
-        preservedIndex >= 0 ? preservedIndex : state.filteredItems.length > 0 ? 0 : -1;
-    } else {
-      state.filterIndex = state.filteredItems.length > 0 ? 0 : -1;
-    }
+    state.filterIndex = state.filteredItems.length > 0 ? 0 : -1;
     render();
   }
 

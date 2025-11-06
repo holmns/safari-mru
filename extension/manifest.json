@@ -12,7 +12,11 @@
   },
   "commands": {
     "swift-tab-search": {
-      "description": "Search Tabs"
+      "description": "Search Tabs",
+      "suggested_key": {
+        "default": "Ctrl+E",
+        "mac": "Command+E"
+      }
     }
   },
   "content_scripts": [
