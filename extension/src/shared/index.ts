@@ -68,6 +68,8 @@ export function normalizeHudSettings(
 export interface HudItem {
   id: TabId;
   title: string;
+  url: string | null;
+  hostname: string | null;
   favIconUrl: string | null;
   pinned?: boolean;
 }
@@ -99,6 +101,13 @@ export interface HudRequestMessage {
 export interface HudFinalizeMessage {
   type: "mru-finalize";
   index?: number;
+  tabId?: TabId;
 }
 
 export type HudMessage = HudRequestMessage | HudFinalizeMessage;
+
+export interface HudActivateCommand {
+  type: "hud-activate";
+}
+
+export type ContentCommandMessage = HudActivateCommand;

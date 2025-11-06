@@ -1,5 +1,6 @@
 import {
   resolveHudTitle,
+  type ContentCommandMessage,
   type HudItem,
   type HudMessage,
   type TabId,
@@ -397,16 +398,31 @@ async function getHudItems(windowId: WindowId): Promise<HudItem[]> {
 
   const icons = await Promise.all(orderedTabs.map((tab) => faviconStore.resolve(tab)));
 
-  return orderedTabs.map((tab, idx) => ({
-    id: tab.id,
-    title: resolveHudTitle({
-      title: tab.title,
-      url: tab.url ?? null,
-      pendingUrl: tab.pendingUrl ?? null,
-    }),
-    favIconUrl: icons[idx] ?? null,
-    pinned: tab.pinned,
-  }));
+  return orderedTabs.map((tab, idx) => {
+    const canonicalUrl = tab.url ?? tab.pendingUrl ?? null;
+    const hostname = (() => {
+      if (!canonicalUrl) return null;
+      try {
+        const url = new URL(canonicalUrl);
+        return url.hostname || null;
+      } catch {
+        return null;
+      }
+    })();
+
+    return {
+      id: tab.id,
+      title: resolveHudTitle({
+        title: tab.title,
+        url: tab.url ?? null,
+        pendingUrl: tab.pendingUrl ?? null,
+      }),
+      url: canonicalUrl,
+      hostname,
+      favIconUrl: icons[idx] ?? null,
+      pinned: tab.pinned,
+    } satisfies HudItem;
+  });
 }
 
 async function activateAt(windowId: WindowId, position: number): Promise<void> {
@@ -503,6 +519,14 @@ function registerListeners(): void {
       void (async () => {
         const win = await chrome.windows.getCurrent();
         if (win?.id !== undefined) {
+          if (typeof msg.tabId === "number") {
+            try {
+              await chrome.tabs.update(msg.tabId, { active: true });
+            } catch {
+              // tab may no longer exist; ignore
+            }
+            return;
+          }
           await activateAt(win.id, Math.max(0, msg.index ?? 1));
         }
       })();
@@ -510,6 +534,25 @@ function registerListeners(): void {
 
     return false;
   });
+
+  if (chrome.commands) {
+    chrome.commands.onCommand.addListener(async (command) => {
+      if (command !== "swift-tab-show-hud") return;
+      const [activeTab] = await chrome.tabs.query({ active: true, currentWindow: true });
+      if (!activeTab?.id) return;
+      try {
+        await chrome.tabs.sendMessage(activeTab.id, {
+          type: "hud-activate",
+        } satisfies ContentCommandMessage);
+      } catch (error) {
+        const message = (error as { message?: string } | undefined)?.message;
+        if (message && message.includes("Receiving end does not exist")) {
+          return;
+        }
+        console.warn("[SwiftTab] Failed to notify content script", error);
+      }
+    });
+  }
 }
 
 registerListeners();

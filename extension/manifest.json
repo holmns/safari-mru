@@ -10,6 +10,11 @@
     "page": "options-dist/index.html",
     "open_in_tab": false
   },
+  "commands": {
+    "swift-tab-show-hud": {
+      "description": "Search Tabs"
+    }
+  },
   "content_scripts": [
     {
       "matches": ["<all_urls>"],
