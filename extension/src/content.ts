@@ -97,32 +97,28 @@ type SessionMode = "altTab" | "command" | null;
     state.hud.dataset.theme = theme;
   }
 
-  function handleColorSchemeChange(): void {
-    applyTheme();
-  }
-
   function attachColorSchemeListener(query: MediaQueryList): void {
     if (typeof query.addEventListener === "function") {
-      query.addEventListener("change", handleColorSchemeChange);
+      query.addEventListener("change", applyTheme);
       return;
     }
 
     const legacyQuery = query as MediaQueryList & {
       addListener?: (listener: (event: MediaQueryListEvent) => void) => void;
     };
-    legacyQuery.addListener?.(handleColorSchemeChange);
+    legacyQuery.addListener?.(applyTheme);
   }
 
   function detachColorSchemeListener(query: MediaQueryList): void {
     if (typeof query.removeEventListener === "function") {
-      query.removeEventListener("change", handleColorSchemeChange);
+      query.removeEventListener("change", applyTheme);
       return;
     }
 
     const legacyQuery = query as MediaQueryList & {
       removeListener?: (listener: (event: MediaQueryListEvent) => void) => void;
     };
-    legacyQuery.removeListener?.(handleColorSchemeChange);
+    legacyQuery.removeListener?.(applyTheme);
   }
 
   function updateColorSchemeListener(): void {
