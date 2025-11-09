@@ -454,7 +454,30 @@ function registerListeners(): void {
   });
 
   chrome.tabs.onRemoved.addListener((tabId, removeInfo) => {
-    void mruStore.remove(removeInfo.windowId, tabId);
+    // Preserve MRU focus order when the currently active tab is closed.
+    void (async () => {
+      const { windowId, isWindowClosing } = removeInfo;
+      const stack = mruStore.getStack(windowId);
+      const closedActiveTab = stack[0] === tabId;
+
+      await mruStore.remove(windowId, tabId);
+
+      if (isWindowClosing || !closedActiveTab) {
+        return;
+      }
+
+      const fallbackTabId = mruStore.getStack(windowId)[0];
+      if (typeof fallbackTabId !== "number") return;
+
+      try {
+        await chrome.tabs.update(fallbackTabId, { active: true });
+      } catch (error) {
+        const message = (error as { message?: string } | undefined)?.message ?? "";
+        if (!message.includes("No tab with id")) {
+          console.warn("[SwiftTab] Failed to activate MRU tab after close", fallbackTabId, error);
+        }
+      }
+    })();
   });
 
   chrome.tabs.onCreated.addListener((tab) => {
