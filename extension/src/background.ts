@@ -168,6 +168,24 @@ const mruStore = (() => {
     schedulePersist();
   }
 
+  async function replace(windowId: WindowId, fromTabId: TabId, toTabId: TabId): Promise<boolean> {
+    await ensureLoaded();
+    ensure(windowId);
+    const stack = stacks.get(windowId);
+    if (!stack) return false;
+    const idx = stack.indexOf(fromTabId);
+    if (idx === -1) return false;
+    stack.splice(idx, 1);
+    let existingIdx = stack.indexOf(toTabId);
+    while (existingIdx !== -1) {
+      stack.splice(existingIdx, 1);
+      existingIdx = stack.indexOf(toTabId);
+    }
+    stack.splice(idx, 0, toTabId);
+    schedulePersist();
+    return true;
+  }
+
   async function backfill(windowId: WindowId): Promise<void> {
     await ensureLoaded();
     ensure(windowId);
@@ -249,6 +267,7 @@ const mruStore = (() => {
     touch,
     append,
     remove,
+    replace,
     backfill,
     seedAll,
     ensureSeeded,
@@ -257,6 +276,28 @@ const mruStore = (() => {
     flushPersist,
   };
 })();
+
+function createReplacementTracker() {
+  const pending = new Set<TabId>();
+  return {
+    track(tabId: TabId) {
+      pending.add(tabId);
+      let released = false;
+      return {
+        release() {
+          if (released) return;
+          pending.delete(tabId);
+          released = true;
+        },
+      };
+    },
+    consume(tabId: TabId): boolean {
+      if (!pending.has(tabId)) return false;
+      pending.delete(tabId);
+      return true;
+    },
+  };
+}
 
 const faviconStore = (() => {
   const byHost = new Map<string, string | null>(); // hostname -> data URI | null
@@ -440,6 +481,8 @@ async function activateAt(windowId: WindowId, position: number): Promise<void> {
 }
 
 function registerListeners(): void {
+  const replacementTracker = createReplacementTracker();
+
   chrome.tabs.onActivated.addListener(({ tabId, windowId }) => {
     void mruStore.touch(windowId, tabId);
   });
@@ -453,6 +496,32 @@ function registerListeners(): void {
     await mruStore.backfill(windowId);
   });
 
+  chrome.tabs.onReplaced.addListener((addedTabId, removedTabId) => {
+    const guard = replacementTracker.track(removedTabId);
+    void (async () => {
+      try {
+        const tab = await chrome.tabs.get(addedTabId);
+        if (tab.windowId === undefined) return;
+        const replaced = await mruStore.replace(tab.windowId, removedTabId, addedTabId);
+        if (!replaced) {
+          if (tab.active) {
+            await mruStore.touch(tab.windowId, addedTabId);
+          } else {
+            await mruStore.append(tab.windowId, addedTabId);
+          }
+        }
+      } catch (error) {
+        console.warn(
+          "[SwiftTab] Failed to handle tab replacement",
+          { addedTabId, removedTabId },
+          error
+        );
+      } finally {
+        guard.release();
+      }
+    })();
+  });
+
   chrome.tabs.onRemoved.addListener((tabId, removeInfo) => {
     // Preserve MRU focus order when the currently active tab is closed.
     void (async () => {
@@ -461,7 +530,9 @@ function registerListeners(): void {
       const closedActiveTab = stack[0] === tabId;
 
       await mruStore.remove(windowId, tabId);
-
+      if (replacementTracker.consume(tabId)) {
+        return;
+      }
       if (isWindowClosing || !closedActiveTab) {
         return;
       }
