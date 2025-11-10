@@ -6,9 +6,8 @@
   "permissions": ["tabs", "storage"],
   "host_permissions": ["<all_urls>"],
   "background": { "service_worker": "dist/background.js", "type": "module" },
-  "options_ui": {
-    "page": "options-dist/index.html",
-    "open_in_tab": false
+  "action": {
+    "default_popup": "options-dist/index.html"
   },
   "commands": {
     "swift-tab-toggle-search": {

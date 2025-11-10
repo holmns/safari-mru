@@ -142,6 +142,9 @@ type SessionMode = "altTab" | "command" | null;
     updateColorSchemeListener();
     applyLayout();
     applyTheme();
+    if (!state.settings.enabled && state.visible) {
+      hide();
+    }
     if (state.visible) {
       render();
     }
@@ -509,7 +512,7 @@ type SessionMode = "altTab" | "command" | null;
   }
 
   async function startCommandSession(): Promise<void> {
-    if (state.isFetchingCommand) return;
+    if (!state.settings.enabled || state.isFetchingCommand) return;
     state.isFetchingCommand = true;
 
     cancelHudTimer();
@@ -620,6 +623,12 @@ type SessionMode = "altTab" | "command" | null;
         nextSettings.theme = maybeTheme;
       }
     }
+    if (Object.prototype.hasOwnProperty.call(changes, "enabled")) {
+      const maybeEnabled = changes.enabled?.newValue;
+      if (typeof maybeEnabled === "boolean") {
+        nextSettings.enabled = maybeEnabled;
+      }
+    }
     applySettings(nextSettings);
     if (state.mode === "command") {
       updateFilter();
@@ -629,6 +638,9 @@ type SessionMode = "altTab" | "command" | null;
   window.addEventListener(
     "keydown",
     async (event: KeyboardEvent) => {
+      if (!state.settings.enabled) {
+        return;
+      }
       if (state.mode === "command" && state.visible) {
         const searchFocused = state.search !== null && event.target === state.search;
         const keyLower = event.key.toLowerCase();
@@ -681,8 +693,6 @@ type SessionMode = "altTab" | "command" | null;
         event.stopImmediatePropagation?.();
         event.stopPropagation();
 
-        if (event.repeat) return;
-
         const delta = event.shiftKey ? -1 : 1;
 
         if (!state.sessionActive) {
@@ -729,6 +739,9 @@ type SessionMode = "altTab" | "command" | null;
   window.addEventListener(
     "keyup",
     (event: KeyboardEvent) => {
+      if (!state.settings.enabled) {
+        return;
+      }
       if (state.mode === "command" && state.visible) {
         if (event.key === "Escape") {
           event.preventDefault();
@@ -762,6 +775,9 @@ type SessionMode = "altTab" | "command" | null;
 
   chrome.runtime.onMessage.addListener((message: HudMessage | ContentCommandMessage) => {
     if (!message || typeof message !== "object") return;
+    if (!state.settings.enabled) {
+      return;
+    }
     if (message.type === "hud-toggle-search") {
       if (state.mode === "command") {
         if (state.isFetchingCommand) {

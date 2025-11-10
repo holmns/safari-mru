@@ -19,10 +19,12 @@
   }
 
   body {
-    @apply m-0 min-h-screen bg-slate-100 font-sans text-slate-900 transition-colors dark:bg-slate-950 dark:text-slate-100;
+    @apply m-0 font-sans;
+    background-color: transparent;
+    width: 400px;
   }
 
-  #root {
-    @apply min-h-screen;
+  :root.dark body {
+    @apply text-white;
   }
 }
